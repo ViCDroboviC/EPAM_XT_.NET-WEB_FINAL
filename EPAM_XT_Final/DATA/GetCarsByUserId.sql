@@ -7,7 +7,7 @@ BEGIN
 	SET NOCOUNT ON;
 
 	SELECT 
-	referenceId, nextOilRefresh, remainingEngineRes, remainingTimingDriveRes, remainingSuspensionRes,
+	id, referenceId, nextOilRefresh, remainingEngineRes, remainingTimingDriveRes, remainingSuspensionRes,
 	remainingGearboxRes, remainingSteeringRes, remainingBrakesRes, totalMileage
 	FROM Cars
 	WHERE ownerId = @userId
