@@ -1,15 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 
 <head>
     <meta charset="utf-8">
-    <title>Кафе Starbuzz</title>
+    <title>Гараж</title>
     <link rel="stylesheet" type="text/css" href="styles/starbuzz.css">
+    <link rel="stylesheet" type="text/css" href="styles/modalForm.css" />
 </head>
 
 
 <body>
-
+    <div id="filter" onclick="Hide()"></div>
+    <div id="modalForm">
+        <span>Введите ваш пробег:</span>
+        <input id="Head" type="text" placeholder="Введите заголовок">
+        <hr>
+        <textarea id="newNote" type="text" placeholder="Текст заметки"></textarea>
+        <button id="close" onclick="Hide()">Закрыть</button>
+    </div>
     <header class="top">
         <img src="images/header.gif" alt="Изображение для верхнего колонтитула кафе Starbuzz">
     </header>
@@ -17,9 +25,6 @@
         <ul>
             <li class="selected"><a href="index.html">ДОМОЙ</a></li>
             <li><a href="blog.html">БЛОГ</a></li>
-            <li><a href="">ИЗОБРЕТЕНИЯ</a></li>
-            <li><a href="">РЕЦЕПТЫ</a></li>
-            <li><a href="">АДРЕСА</a></li>
         </ul>
     </nav>
     <div id="award">
@@ -30,34 +35,40 @@
         <div id="tableRow"></div>
         <section id="carinfo">
             <p>
-                <h2>Марка/Модель авто</h2>
-                <span>Год выпска: </span><span>1995</span><br>
-                <span>Общий пробег: </span><span>0</span><span>км</span>
-                <button>изменить</button>
+            <h2>Марка/Модель авто</h2>
+            <span>Год выпска: </span><span>1995</span><br>
+            <span>Общий пробег: </span><span>0</span><span>км</span>
+            <button>изменить</button>
             </p>
             <p>
-                <h3>Масло</h3>
-                <span>До следующей замены масла</span><span>5000</span><span>км</span><button>проведена замена масла</button>
+            <h3>Масло</h3>
+            <span>До следующей замены масла</span><span>5000</span><span>км</span><br>
+            <button>проведена замена масла</button>
             </p>
             <p>
-                <h3>Привод ГРМ</h3>
-                <span>Ресурс до замены: </span><span>80000</span><span>км</span><button>Проведено техобслуживание</button>
+            <h3>Привод ГРМ</h3>
+            <span>Ресурс до замены: </span><span>80000</span><span>км</span><br>
+            <button>Проведено техобслуживание</button>
             </p>
             <p>
-                <h3>Силовая установка</h3>
-                <span>Ресурс до обслуживания: </span><span>250000</span><span>км</span><button>Проведено техобслуживание</button>
+            <h3>Силовая установка</h3>
+            <span>Ресурс до обслуживания: </span><span>250000</span><span>км</span><br>
+            <button>Проведено техобслуживание</button>
             </p>
             <p>
-                <h3>Детали подвески</h3>
-                <span>Ресурс до замены: </span><span>75000</span><span>км</span><button>Проведено техобслуживание</button>
+            <h3>Детали подвески</h3>
+            <span>Ресурс до замены: </span><span>75000</span><span>км</span><br>
+            <button>Проведено техобслуживание</button>
             </p>
             <p>
-                <h3>Рулевое управление</h3>
-                <span>Ресурс до замены: </span><span>150000</span><span>км</span><button>Проведено техобслуживание</button>
+            <h3>Рулевое управление</h3>
+            <span>Ресурс до замены: </span><span>150000</span><span>км</span><br>
+            <button>Проведено техобслуживание</button>
             </p>
             <p>
-                <h3>Тормозная система</h3>
-                <span>Ресурс до замены: </span><span>75000</span><span>км</span><button>Проведено техобслуживание</button>
+            <h3>Тормозная система</h3>
+            <span>Ресурс до замены: </span><span>75000</span><span>км</span><br>
+            <button>Проведено техобслуживание</button>
             </p>
         </section>
 
@@ -66,6 +77,7 @@
             <p>авто №1</p>
             <p>авто №1</p>
             <p>авто №1</p>
+            <button id="addCarToGarage" onclick="show()">добавить</button>
         </section>
     </div>
     </div>
@@ -76,9 +88,7 @@
         Все торговый марки, которые упоминаются на данном сайте, являются собственностью их владельцев.
     </footer>
 
-
+    <script src="scripts/scripts.js"></script>
 </body>
-
-</html>
 
 </html>
