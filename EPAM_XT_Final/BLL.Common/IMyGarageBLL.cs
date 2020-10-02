@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Entities;
+using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +10,8 @@ namespace BLL.Common
 {
     public interface IMyGarageBLL
     {
+        User GetUserInfo();
+
+        List<CarReference> GetCarReferencesList();
     }
 }

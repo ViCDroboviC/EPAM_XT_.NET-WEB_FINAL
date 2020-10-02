@@ -4,16 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{879863DC-9847-43E4-81C7-164303A5A3A2}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BLL.Common</RootNamespace>
-    <AssemblyName>BLL.Common</AssemblyName>
+    <ProjectGuid>{6E10FCD1-03FA-41CD-A621-6FB8CDD5E8A4}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>MyGarageConsoleTest</RootNamespace>
+    <AssemblyName>MyGarageConsoleTest</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -41,12 +43,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IMyGarageBLL.cs" />
+    <Compile Include="Test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BLL.Common\BLL.Common.csproj">
+      <Project>{879863dc-9847-43e4-81c7-164303a5a3a2}</Project>
+      <Name>BLL.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BLLResolver\BLLResolver.csproj">
+      <Project>{4EBC7864-BD98-432D-8EC1-083F4D21B5AF}</Project>
+      <Name>BLLResolver</Name>
+    </ProjectReference>
     <ProjectReference Include="..\common\Entities\Entities.csproj">
-      <Project>{744D806E-956B-409A-9EF0-D057D1A47AAE}</Project>
+      <Project>{744d806e-956b-409a-9ef0-d057d1a47aae}</Project>
       <Name>Entities</Name>
     </ProjectReference>
   </ItemGroup>

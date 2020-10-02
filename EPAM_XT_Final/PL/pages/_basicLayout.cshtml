@@ -1,0 +1,53 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8">
+    <title>Гараж</title>
+    <link rel="stylesheet" type="text/css" href="styles/Garage.css">
+    <link rel="stylesheet" type="text/css" href="styles/modalForm.css" />
+</head>
+<body>
+    <div id="filter" onclick="Hide()"></div>
+    <div id="modalForm">
+        <span>Введите ваш пробег:</span>
+        <input id="Head" type="text" value="0">
+        <hr>
+        <div id="carRefList">
+            @RenderPage("~/pages/_carRefsList.cshtml")
+        </div>
+        <button id="close" onclick="Hide()">Закрыть</button>
+    </div>
+    <header class="top">
+        <img src="images/header.gif" alt="Изображение для верхнего колонтитула кафе Starbuzz">
+    </header>
+    <nav>
+        <ul>
+            <li class="selected"><a href="index.html">ДОМОЙ</a></li>
+            <li><a href="blog.html">БЛОГ</a></li>
+        </ul>
+    </nav>
+    <div id="award">
+        <img src="images/award.gif" alt="Награда обжарщику кофейных зерен года">
+    </div>
+
+    <div id="tableContainer">
+        <div id="tableRow">
+            @RenderBody()
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2020, Автор: ViCDroboviC
+        <br>
+        Все торговый марки, которые упоминаются на данном сайте, являются собственностью их владельцев.
+    </footer>
+
+    <script src="scripts/scripts.js"></script>
+</body>
+</html>

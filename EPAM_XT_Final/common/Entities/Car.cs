@@ -24,6 +24,9 @@ namespace Entities
             this.remainingSteeringRes = remainingSteeringRes;
             this.remainingBrakesRes = remainingBrakesRes;
         }
+
+        public string fullName { get; set; }
+
         public int id { get; private set; }
 
         public int ownerId { get; private set; }

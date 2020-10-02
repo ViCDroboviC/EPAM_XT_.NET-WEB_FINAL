@@ -3,7 +3,7 @@ using DBHelper;
 
 namespace DAL.Resolver
 {
-    public class DALResolver
+    public static class DALResolver
     {
 
         private static IMyGarageDAL usersDAL;
