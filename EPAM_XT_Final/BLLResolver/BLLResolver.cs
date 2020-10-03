@@ -1,7 +1,7 @@
 ﻿using BLL.Common;
 using MyGarageBLL;
 
-namespace BLLResolver
+namespace BLL.BLLResolver
 {
     public static class BLLResolver
     {

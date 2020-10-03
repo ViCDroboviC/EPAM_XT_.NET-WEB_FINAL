@@ -1,9 +1,7 @@
-﻿
-using BLLResolver;
-using BLL.Common;
-using Entities;
+﻿using Entities;
 using System.Collections.Generic;
 using System;
+using BLL.BLLResolver;
 
 namespace MyGarageConsoleTest
 {
@@ -11,7 +9,7 @@ namespace MyGarageConsoleTest
     {
         static void Main(string[] args)
         {
-            var bll = BLLResolver.BLLResolver.BLLProcessor;
+            var bll = BLLResolver.BLLProcessor;
 
             List<CarReference> CarsList = bll.GetCarReferencesList();
 

@@ -12,19 +12,37 @@ namespace MyGarageBLL
 {
     public class MyGarageProcessor : IMyGarageBLL
     {
-        private IMyGarageDAL dal = DALResolver.UsersDAL;
+        private IMyGarageDAL dal;
 
         private List<CarReference> CarReferencesList;
 
         public MyGarageProcessor()
         {
+        }
+
+        public MyGarageProcessor(IMyGarageDAL dal)
+        {
+            this.dal = dal;
             CarReferencesList = dal.GetAllCarReferences();
         }
 
 
         public User GetUserInfo()
         {
-            throw new NotImplementedException();
+            var wantedUser = dal.GetUser("ViCDroboviC");
+
+            wantedUser.CarsList = dal.GetCarsByOwnerId(wantedUser.id);
+
+            foreach (Car car in wantedUser.CarsList)
+            {
+                var carReference = CarReferencesList.FirstOrDefault(carRef => carRef.id == car.referenceId);
+
+                string fullName = carReference.vendor + " " + carReference.model;
+
+                car.fullName = fullName;
+            }
+
+            return wantedUser;
         }
 
         public List<CarReference> GetCarReferencesList()

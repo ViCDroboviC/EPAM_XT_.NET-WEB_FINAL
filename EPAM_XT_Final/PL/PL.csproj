@@ -92,6 +92,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="pages\CarContainer.cs" />
+    <Compile Include="pages\CarRefsContainer.cs" />
     <Compile Include="pages\UserContainer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -101,6 +102,8 @@
     <Content Include="pages\_carRefsList.cshtml" />
     <Content Include="pages\_basicLayout.cshtml" />
     <Content Include="pages\_car.cshtml" />
+    <Content Include="pages\_CarRefView.cshtml" />
+    <Content Include="pages\_UserGarage.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -120,6 +123,10 @@
     <ProjectReference Include="..\common\Entities\Entities.csproj">
       <Project>{744D806E-956B-409A-9EF0-D057D1A47AAE}</Project>
       <Name>Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DependencyResolver\DependencyResolver.csproj">
+      <Project>{e6bb9c0a-a4ba-4b9e-8866-6a0f9eb38818}</Project>
+      <Name>DependencyResolver</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

@@ -23,6 +23,7 @@ namespace Entities
             this.remainingGearboxRes = remainingGearboxRes;
             this.remainingSteeringRes = remainingSteeringRes;
             this.remainingBrakesRes = remainingBrakesRes;
+            fullName = null;
         }
 
         public string fullName { get; set; }

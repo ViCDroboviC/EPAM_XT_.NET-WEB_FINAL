@@ -1,36 +1,21 @@
-﻿
+﻿@using BLL.BLLResolver;
+@using Entities;
+@using PL.pages;
+@using DependencyResolver;
+@{
+    Layout = null;
+
+    var bll = Resolver.bll;
+
+    CarRefsContainer.refList = bll.GetCarReferencesList();
+}
 <ol>
-    <li class="carReference">Авто модель №1</li>
-    <li class="carReference">Авто модель №1</li>
-    <li class="carReference">Авто модель №1</li>
-    <li class="carReference">Авто модель №1</li>
-    <li class="carReference">Авто модель №1</li>
-    <li class="carReference">Авто модель №1</li>
-    <li class="carReference">Авто модель №1</li>
-    <li class="carReference">Авто модель №1</li>
-    <li class="carReference">Авто модель №1</li>
-    <li class="carReference">Авто модель №1</li>
-    <li class="carReference">Авто модель №1</li>
-    <li class="carReference">Авто модель №1</li>
-    <li class="carReference">Авто модель №1</li>
-    <li class="carReference">Авто модель №1</li>
-    <li class="carReference">Авто модель №1</li>
-    <li class="carReference">Авто модель №1</li>
-    <li class="carReference">Авто модель №1</li>
-    <li class="carReference">Авто модель №1</li>
-    <li class="carReference">Авто модель №1</li>
-    <li class="carReference">Авто модель №1</li>
-    <li class="carReference">Авто модель №1</li>
-    <li class="carReference">Авто модель №1</li>
-    <li class="carReference">Авто модель №1</li>
-    <li class="carReference">Авто модель №1</li>
-    <li class="carReference">Авто модель №1</li>
-    <li class="carReference">Авто модель №1</li>
-    <li class="carReference">Авто модель №1</li>
-    <li class="carReference">Авто модель №1</li>
-    <li class="carReference">Авто модель №1</li>
-    <li class="carReference">Авто модель №1</li>
-    <li class="carReference">Авто модель №1</li>
-    <li class="carReference">Авто модель №1</li>
+    @{
+        foreach (CarReference reference in CarRefsContainer.refList)
+        {
+            CarRefsContainer.currentRef = reference;
+            @RenderPage("~/pages/_CarRefView.cshtml")
+        }
+    }
 </ol>
 

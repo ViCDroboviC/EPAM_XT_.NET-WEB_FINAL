@@ -4,6 +4,7 @@ using System.Data;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Configuration;
+using System.Data.SqlTypes;
 
 namespace DBHelper
 {
@@ -284,7 +285,7 @@ namespace DBHelper
 
         private IEnumerable<Car> GetUserCars(int ownerId)
         {
-            using (connection)
+            using (connection = new SqlConnection(_connectionString))
             {
                 var storedProcedure = "dbo.Cars_GetByUserId";
 
@@ -327,9 +328,9 @@ namespace DBHelper
 
         private IEnumerable<CarReference> GetAwaliableCarsList()
         {
-            using (connection)
+            using (connection = new SqlConnection(_connectionString))
             {
-                var storedProcedure = "dbo.Cars_GetByUserId";
+                var storedProcedure = "dbo.GetAll";
 
                 var command = new SqlCommand(storedProcedure, connection)
                 {
@@ -350,7 +351,7 @@ namespace DBHelper
                     var timingDriveResource = (int)reader["timingDriveResource"];
                     var suspensionResource = (int)reader["suspensionResource"];
                     var gearboxResource = (int)reader["gearboxResource"];
-                    var steeringResource = (int)reader["remainingGearboxRes"];
+                    var steeringResource = (int)reader["steeringResource"];
                     var brakesResource = (int)reader["brakesResource"];
 
                     yield return new CarReference(id, vendor, model, oilRefreshRate, engineResource, timingDriveResource, suspensionResource,
@@ -361,9 +362,9 @@ namespace DBHelper
 
         private User GetByUsername(string wantedUsername)
         {
-            using (connection)
+            using (connection = new SqlConnection(_connectionString))
             {
-                var storedProcedure = "dbo.CarReferences_GetById";
+                var storedProcedure = "dbo.Users_GetByUserName";
 
                 var command = new SqlCommand(storedProcedure, connection)
                 {
@@ -381,11 +382,14 @@ namespace DBHelper
 
                 var reader = command.ExecuteReader();
 
-                var id = (int)reader["id"];
-                var username = reader["username"] as string;
-                var password = reader["password"] as string;
-
-                return new User(id, username, password);
+                while (reader.Read())
+                {
+                    var id = (int)reader["id"];
+                    var username = reader["username"] as string;
+                    var password = reader["password"] as string;
+                    return new User(id, username, password);
+                }
+                return null;
             }
         }
     }
