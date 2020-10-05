@@ -101,7 +101,7 @@
     <Content Include="pages\index.cshtml" />
     <Content Include="pages\_carRefsList.cshtml" />
     <Content Include="pages\_basicLayout.cshtml" />
-    <Content Include="pages\_car.cshtml" />
+    <Content Include="pages\carinfo.cshtml" />
     <Content Include="pages\_CarRefView.cshtml" />
     <Content Include="pages\_UserGarage.cshtml" />
     <None Include="Web.Debug.config">

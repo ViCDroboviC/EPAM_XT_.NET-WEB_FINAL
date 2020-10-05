@@ -1,0 +1,68 @@
+﻿
+@using Entities;
+@using PL.pages;
+@using DependencyResolver;
+@{
+    Layout = "~/pages/_basicLayout.cshtml";
+
+    var currentUser = UserContainer.currentUser;
+
+    string tag = Request.QueryString["id"];
+    var success = Int32.TryParse(tag, out int carId);
+
+    if (success)
+    {
+        CarContainer.currentCar = currentUser.CarsList.FirstOrDefault(wantedCar => wantedCar.id == carId);
+    }
+
+    var carToDisplay = CarContainer.currentCar;
+}
+<section id="carinfo">
+    <p>
+        <h2>@carToDisplay.fullName</h2>
+        <span>Общий пробег: </span><span>@carToDisplay.totalMileage</span><span> км</span>
+        <button>изменить</button>
+    </p>
+    <p>
+        <h3>Масло</h3>
+        <span>До следующей замены масла</span><span>@carToDisplay.nextOilRefresh</span><span> км</span><br>
+        <button>проведена замена масла</button>
+    </p>
+    <p>
+        <h3>Привод ГРМ</h3>
+        <span>Ресурс до замены: </span><span>@carToDisplay.remainingTimingDriveRes</span><span> км</span><br>
+        <button>Проведено техобслуживание</button>
+    </p>
+    <p>
+        <h3>Силовая установка</h3>
+        <span>Ресурс до обслуживания: </span><span>@carToDisplay.remainingEngineRes</span><span> км</span><br>
+        <button>Проведено техобслуживание</button>
+    </p>
+    <p>
+        <h3>Детали подвески</h3>
+        <span>Ресурс до замены: </span><span>@carToDisplay.remainingSuspensionRes</span><span> км</span><br>
+        <button>Проведено техобслуживание</button>
+    </p>
+    <p>
+        <h3>Рулевое управление</h3>
+        <span>Ресурс до замены: </span><span>@carToDisplay.remainingSteeringRes</span><span> км</span><br>
+        <button>Проведено техобслуживание</button>
+    </p>
+    <p>
+        <h3>Тормозная система</h3>
+        <span>Ресурс до замены: </span><span>@carToDisplay.remainingBrakesRes</span><span> км</span><br>
+        <button>Проведено техобслуживание</button>
+    </p>
+</section>
+
+<section id="mycars">
+    <h2>Мой гараж:</h2>
+    @foreach (Car car in currentUser.CarsList)
+    {
+        CarContainer.currentCar = car;
+        @RenderPage("~/pages/_UserGarage.cshtml")
+    }
+    <button id="addCarToGarage" onclick="show()">добавить</button>
+</section>
+
+

@@ -11,7 +11,6 @@ namespace DBHelper
     public class MyGarageDBHelper : IMyGarageDAL
     {
         private static SqlConnection connection = new SqlConnection(_connectionString);
-        //в случае проблем с подсоединением к БД проверять это место в первую очередь
 
         public MyGarageDBHelper() { }
 
@@ -72,7 +71,7 @@ namespace DBHelper
 
                 command.Parameters.Add(userName);
 
-                var password = new SqlParameter("@password", SqlDbType.NVarChar)
+                var password = new SqlParameter("@password", SqlDbType.Int)
                 {
                     Value = newUser.password
                 };
@@ -386,7 +385,7 @@ namespace DBHelper
                 {
                     var id = (int)reader["id"];
                     var username = reader["username"] as string;
-                    var password = reader["password"] as string;
+                    var password = (int)reader["password"];
                     return new User(id, username, password);
                 }
                 return null;
