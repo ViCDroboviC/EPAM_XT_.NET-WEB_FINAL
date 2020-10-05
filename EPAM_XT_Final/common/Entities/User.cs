@@ -6,7 +6,7 @@ namespace Entities
     {
         public List<Car> CarsList;
 
-        public User(int id, string userName, string password)
+        public User(int id, string userName, int password)
         {
             CarsList = new List<Car>();
             this.id = id;
@@ -18,6 +18,6 @@ namespace Entities
 
         public string userName { get; private set; }
 
-        public string password { get; private set; }
+        public int password { get; private set; }
     }
 }

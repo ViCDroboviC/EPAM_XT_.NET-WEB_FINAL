@@ -1,0 +1,18 @@
+﻿@{
+    Layout = "~/pages/_basicLayout.cshtml";
+
+    string message = null;
+}
+
+<section id="registrationForm">
+    <form action="~/pages/index.cshtml" method="post">
+        <p><input type="text" name="nickname" placeholder="Введите имя пользователя" /></p>
+        <p><input type="password" name="password" placeholder="Пароль" /></p>
+        @if (message != null)
+        {
+            <p>@message</p>
+        }
+        <p><button>Зарегистрироваться</button></p>
+    </form>
+    <a href="~/pages/index.cshtml">назад</a>
+</section>

@@ -19,6 +19,24 @@ body {
 div#tableRow{
     display: table-row;
 }
+
+section.Lounge{
+  display: table-cell;
+  background:       #aaaaaa;
+  font-size:        105%;
+  padding:          15px;
+  vertical-align: top;
+  width: 1000%;
+}
+
+#registrationForm, #authenticationForm{
+  display: table-cell;
+  background:       #aaaaaa;
+  font-size:        105%;
+  padding:          15px;
+  vertical-align: top;
+  width: 1%;
+}
   
 section#carinfo{
     display: table-cell;
@@ -26,7 +44,6 @@ section#carinfo{
     font-size:        105%;
     padding:          15px;
     vertical-align: top;
-    width: 1000%;
 }
   
   #mycars {

@@ -12,53 +12,67 @@
     var currentUser = UserContainer.currentUser;
 }
 
+@if (User.Identity.IsAuthenticated)
+{
+    <section id="carinfo">
+        <p>
+            <h2>Марка/Модель авто</h2>
+            <span>Год выпска: </span><span></span><br>
+            <span>Общий пробег: </span><span></span><span>км</span>
+            <button>изменить</button>
+        </p>
+        <p>
+            <h3>Масло</h3>
+            <span>До следующей замены масла</span><span></span><span>км</span><br>
+            <button>проведена замена масла</button>
+        </p>
+        <p>
+            <h3>Привод ГРМ</h3>
+            <span>Ресурс до замены: </span><span></span><span>км</span><br>
+            <button>Проведено техобслуживание</button>
+        </p>
+        <p>
+            <h3>Силовая установка</h3>
+            <span>Ресурс до обслуживания: </span><span></span><span>км</span><br>
+            <button>Проведено техобслуживание</button>
+        </p>
+        <p>
+            <h3>Детали подвески</h3>
+            <span>Ресурс до замены: </span><span></span><span>км</span><br>
+            <button>Проведено техобслуживание</button>
+        </p>
+        <p>
+            <h3>Рулевое управление</h3>
+            <span>Ресурс до замены: </span><span></span><span>км</span><br>
+            <button>Проведено техобслуживание</button>
+        </p>
+        <p>
+            <h3>Тормозная система</h3>
+            <span>Ресурс до замены: </span><span></span><span>км</span><br>
+            <button>Проведено техобслуживание</button>
+        </p>
+    </section>
 
-<section id="carinfo">
-    <p>
-        <h2>Марка/Модель авто</h2>
-        <span>Год выпска: </span><span></span><br>
-        <span>Общий пробег: </span><span></span><span>км</span>
-        <button>изменить</button>
-    </p>
-    <p>
-        <h3>Масло</h3>
-        <span>До следующей замены масла</span><span></span><span>км</span><br>
-        <button>проведена замена масла</button>
-    </p>
-    <p>
-        <h3>Привод ГРМ</h3>
-        <span>Ресурс до замены: </span><span></span><span>км</span><br>
-        <button>Проведено техобслуживание</button>
-    </p>
-    <p>
-        <h3>Силовая установка</h3>
-        <span>Ресурс до обслуживания: </span><span></span><span>км</span><br>
-        <button>Проведено техобслуживание</button>
-    </p>
-    <p>
-        <h3>Детали подвески</h3>
-        <span>Ресурс до замены: </span><span></span><span>км</span><br>
-        <button>Проведено техобслуживание</button>
-    </p>
-    <p>
-        <h3>Рулевое управление</h3>
-        <span>Ресурс до замены: </span><span></span><span>км</span><br>
-        <button>Проведено техобслуживание</button>
-    </p>
-    <p>
-        <h3>Тормозная система</h3>
-        <span>Ресурс до замены: </span><span></span><span>км</span><br>
-        <button>Проведено техобслуживание</button>
-    </p>
-</section>
-
-<section id="mycars">
-    <h2>Мой гараж:</h2>
-    @foreach(Car car in currentUser.CarsList)
+    <section id="mycars">
+        <h2>Мой гараж:</h2>
+        @foreach (Car car in currentUser.CarsList)
         {
             CarContainer.currentCar = car;
             @RenderPage("~/pages/_UserGarage.cshtml")
         }
-    <button id="addCarToGarage" onclick="show()">добавить</button>
+        <button id="addCarToGarage" onclick="show()">добавить</button>
+    </section>
+}
+else
+{ 
+<section class="Lounge">
+    <h2>Приветствую Гость!</h2>
+    <p>Данная программа позволяет вам следить за техническим состоянием ваших автомобилей по пробегу вашего автомобиля и ресурсу его конкретных узлов. 
+    От пользователя потребуется только "заполнить свой гараж" и периодически обновлять пробег для своего автомобиля и делать пометки об обслуживании механизмов и агрегатов
+    внутри программы. Программа сама рассчитает остаток ресурса до обслуживания и в случае если ресурс механизма или агрегата останется меньше 1 000 км сообщит пользователю о 
+    необходимости его обслуживания, о чем просигнализирует сообщение: <strong>"Узел требует ремонта!".</strong></p>
+    <p>Для продолжнеия пожалуйста, <a href="~/pages/Registration.cshtml">зарегистрируйтесь</a> или <a href="~/pages/Authentication.cshtml">авторизируйтесь</a>.</p>
 </section>
+}
+
 

@@ -53,10 +53,6 @@
       <Project>{744D806E-956B-409A-9EF0-D057D1A47AAE}</Project>
       <Name>Entities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DAL.Resolver\DAL.Resolver.csproj">
-      <Project>{F8C788FD-EA19-4F5B-AFE2-E0619EF01C54}</Project>
-      <Name>DAL.Resolver</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DAL\DAL.Common\DAL.Common.csproj">
       <Project>{7C98075B-BA1E-486C-8F00-34828553AE7F}</Project>
       <Name>DAL.Common</Name>

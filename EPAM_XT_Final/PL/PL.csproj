@@ -104,6 +104,8 @@
     <Content Include="pages\carinfo.cshtml" />
     <Content Include="pages\_CarRefView.cshtml" />
     <Content Include="pages\_UserGarage.cshtml" />
+    <Content Include="pages\Registration.cshtml" />
+    <Content Include="pages\Authentication.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -115,10 +117,6 @@
     <ProjectReference Include="..\BLL.Common\BLL.Common.csproj">
       <Project>{879863dc-9847-43e4-81c7-164303a5a3a2}</Project>
       <Name>BLL.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BLLResolver\BLLResolver.csproj">
-      <Project>{4ebc7864-bd98-432d-8ec1-083f4d21b5af}</Project>
-      <Name>BLLResolver</Name>
     </ProjectReference>
     <ProjectReference Include="..\common\Entities\Entities.csproj">
       <Project>{744D806E-956B-409A-9EF0-D057D1A47AAE}</Project>

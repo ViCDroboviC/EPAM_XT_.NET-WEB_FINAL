@@ -54,10 +54,6 @@
       <Project>{879863dc-9847-43e4-81c7-164303a5a3a2}</Project>
       <Name>BLL.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BLLResolver\BLLResolver.csproj">
-      <Project>{4EBC7864-BD98-432D-8EC1-083F4D21B5AF}</Project>
-      <Name>BLLResolver</Name>
-    </ProjectReference>
     <ProjectReference Include="..\common\Entities\Entities.csproj">
       <Project>{744d806e-956b-409a-9ef0-d057d1a47aae}</Project>
       <Name>Entities</Name>

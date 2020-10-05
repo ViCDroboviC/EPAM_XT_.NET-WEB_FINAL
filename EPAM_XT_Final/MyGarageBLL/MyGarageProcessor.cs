@@ -1,6 +1,5 @@
 ﻿using BLL.Common;
 using DAL.Common;
-using DAL.Resolver;
 using Entities;
 using System;
 using System.Collections.Generic;
