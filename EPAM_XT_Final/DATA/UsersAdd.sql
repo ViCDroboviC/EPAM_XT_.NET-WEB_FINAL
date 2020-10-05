@@ -1,7 +1,7 @@
 
 CREATE PROCEDURE dbo.Users_Add
 	@username nvarchar(50),
-	@password nvarchar(50)
+	@password int
 AS
 BEGIN
 

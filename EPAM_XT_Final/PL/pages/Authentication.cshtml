@@ -16,7 +16,7 @@
         var _password = Request["password"];
         if (string.IsNullOrWhiteSpace(_nickname) || string.IsNullOrWhiteSpace(_password))
         {
-            message = "Пожалуйста заполните все поля!";
+            message = "Пожалуйста, заполните все поля!";
         }
         else
         {
@@ -32,6 +32,7 @@
 }
 
 <section id="authenticationForm">
+    <h2>Аутентификация</h2>
     <form action="~/pages/Authentication.cshtml" method="post">
         <p><input type="text" name="nickname" placeholder="Введите имя пользователя" /></p>
         <p><input type="password" name="password" placeholder="Пароль" /></p>

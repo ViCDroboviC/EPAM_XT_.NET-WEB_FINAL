@@ -6,6 +6,12 @@ namespace Entities
     {
         public List<Car> CarsList;
 
+        public User (string userName, int password)
+        {
+            this.userName = userName;
+            this.password = password;
+        }
+
         public User(int id, string userName, int password)
         {
             CarsList = new List<Car>();

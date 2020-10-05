@@ -49,9 +49,9 @@
       <Project>{879863DC-9847-43E4-81C7-164303A5A3A2}</Project>
       <Name>BLL.Contracts</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DAL\DAL.Common\DAL.Common.csproj">
+    <ProjectReference Include="..\DAL\DAL.Common\DAL.Contracts.csproj">
       <Project>{7C98075B-BA1E-486C-8F00-34828553AE7F}</Project>
-      <Name>DAL.Common</Name>
+      <Name>DAL.Contracts</Name>
     </ProjectReference>
     <ProjectReference Include="..\DBHelper\DBHelper.csproj">
       <Project>{F069DB2B-1499-4C22-B007-D2EA7E61FEA3}</Project>

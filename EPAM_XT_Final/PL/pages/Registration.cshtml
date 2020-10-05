@@ -1,16 +1,48 @@
-﻿@{
+﻿@using Entities;
+@using PL.pages;
+@using DependencyResolver;
+@{
     Layout = "~/pages/_basicLayout.cshtml";
 
     string message = null;
+    string nickname = null;
+    int password;
+    bool success = false;
+
+    var bll = Resolver.bll;
+
+    if (IsPost)
+    {
+        var _nickname = Request["nickname"];
+        var _password = Request["password"];
+        if (string.IsNullOrWhiteSpace(_nickname) || string.IsNullOrWhiteSpace(_password))
+        {
+            message = "Пожалуйста, заполните все поля!";
+        }
+        else
+        {
+            nickname = _nickname;
+            password = _password.GetHashCode();
+            if (bll.RegisterNewUser(nickname, password, out message))
+            {
+                success = true;
+            }
+        }
+    }
 }
 
 <section id="registrationForm">
-    <form action="~/pages/index.cshtml" method="post">
+    <h2>Регистрация</h2>
+    <form action="~/pages/Registration.cshtml" method="post">
         <p><input type="text" name="nickname" placeholder="Введите имя пользователя" /></p>
         <p><input type="password" name="password" placeholder="Пароль" /></p>
-        @if (message != null)
+        @if (IsPost || message != null || success)
         {
-            <p>@message</p>
+            <p>@message Для продолжения пожалуйста, <a href="~/pages/Authentication.cshtml">авторизируйтесь</a></p>
+        }
+        else if(IsPost || message != null)
+        {
+            <p id="warning">@message </p>
         }
         <p><button>Зарегистрироваться</button></p>
     </form>

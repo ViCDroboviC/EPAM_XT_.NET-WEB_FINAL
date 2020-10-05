@@ -1,6 +1,6 @@
 
 CREATE PROCEDURE dbo.Users_GetByUserName
-	@userName int
+	@userName nvarChar(50)
 AS
 BEGIN
 	SET NOCOUNT ON;

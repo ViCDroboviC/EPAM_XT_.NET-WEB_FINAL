@@ -62,5 +62,21 @@ namespace MyGarageBLL
             message = "Введено неправильное имя пользователя или пароль!";
             return false;
         }
+
+        public bool RegisterNewUser(string nickname, int password, out string message)
+        {           
+            List<string> existingNicknames = dal.GetAllNicknames();
+            if (existingNicknames.Contains(nickname, StringComparer.InvariantCultureIgnoreCase))
+            {
+                message = "Имя уже используется!";
+                return false;
+            }
+            else
+            {
+                dal.AddUser(new User(nickname, password));
+                message = "Регистрация прошла успешно!";
+                return true;
+            }
+        }
     }
 }

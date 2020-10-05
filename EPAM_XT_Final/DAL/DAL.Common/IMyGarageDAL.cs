@@ -18,5 +18,7 @@ namespace DAL.Common
         void AddUser(User newUser); // Создание нового пользователя
 
         void RefreshCarData(Car car); //Обновление пробега
+
+        List<string> GetAllNicknames(); //Получение всех никнеймов для проверки возможности создания нового пользователя
     }
 }

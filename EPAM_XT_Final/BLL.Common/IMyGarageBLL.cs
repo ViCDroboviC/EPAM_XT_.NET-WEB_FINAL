@@ -15,5 +15,7 @@ namespace BLL.Common
         List<CarReference> GetCarReferencesList();
 
         bool Authenticate(string nickname, int password, out string message);
+
+        bool RegisterNewUser(string nickname, int password, out string message);
     }
 }

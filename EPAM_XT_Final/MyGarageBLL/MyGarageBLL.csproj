@@ -53,9 +53,9 @@
       <Project>{744D806E-956B-409A-9EF0-D057D1A47AAE}</Project>
       <Name>Entities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DAL\DAL.Common\DAL.Common.csproj">
+    <ProjectReference Include="..\DAL\DAL.Common\DAL.Contracts.csproj">
       <Project>{7C98075B-BA1E-486C-8F00-34828553AE7F}</Project>
-      <Name>DAL.Common</Name>
+      <Name>DAL.Contracts</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

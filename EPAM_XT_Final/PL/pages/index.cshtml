@@ -56,6 +56,7 @@
     <section id="mycars">
         <h2>Мой гараж:</h2>
         @foreach (Car car in currentUser.CarsList)
+            //TODO выкидывает исключение в случае если новый ппользователь некорректно вышел и кэш браузера не очищался. currentUser в BLL пустой.
         {
             CarContainer.currentCar = car;
             @RenderPage("~/pages/_UserGarage.cshtml")

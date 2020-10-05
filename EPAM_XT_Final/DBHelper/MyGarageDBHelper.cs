@@ -53,9 +53,15 @@ namespace DBHelper
             RefreshCar(car);
         }
 
+        public List<string> GetAllNicknames()
+        {
+            List<string> usernames = new List<string>(GetAllUsernames());
+            return usernames;
+        }
+
         private void AddUserToDB(User newUser)
         {
-            using (connection)
+            using (connection = new SqlConnection(_connectionString))
             {
                 var storedProcedure = "dbo.Users_Add";
 
@@ -86,7 +92,7 @@ namespace DBHelper
 
         private void AddCarToDB(Car newCar)
         {
-            using (connection)
+            using (connection = new SqlConnection(_connectionString))
             {
                 var storedProcedure = "dbo.Cars_Add";
 
@@ -174,7 +180,7 @@ namespace DBHelper
 
         private void RefreshCar(Car car)
         {
-            using (connection)
+            using (connection = new SqlConnection(_connectionString))
             {
                 var storedProcedure = "dbo.Cars_Refresh";
 
@@ -247,7 +253,7 @@ namespace DBHelper
 
         private CarReference GetRefById(int wantedId)
         {
-            using (connection)
+            using (connection = new SqlConnection(_connectionString))
             {
                 var storedProcedure = "dbo.CarReferences_GetById";
 
@@ -391,5 +397,30 @@ namespace DBHelper
                 return null;
             }
         }
+
+        private IEnumerable<string> GetAllUsernames()
+        {
+            using (connection = new SqlConnection(_connectionString))
+            {
+                var storedProcedure = "dbo.Users_GetAllNicknames";
+
+                var command = new SqlCommand(storedProcedure, connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                connection.Open();
+
+                var reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    var nickname = reader["username"] as string;
+
+                    yield return nickname;
+                }
+            }
+        }
+
     }
 }
