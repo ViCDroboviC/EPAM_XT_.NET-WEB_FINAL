@@ -19,6 +19,15 @@ body {
 div#tableRow{
     display: table-row;
 }
+
+.Lounge{
+  display: table-cell;
+  background:       #aaaaaa;
+  font-size:        105%;
+  padding:          15px;
+  vertical-align: top;
+  width: 1000%;
+}
   
 section#carinfo{
     display: table-cell;

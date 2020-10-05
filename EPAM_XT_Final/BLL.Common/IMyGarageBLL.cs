@@ -13,5 +13,7 @@ namespace BLL.Common
         User GetUserInfo();
 
         List<CarReference> GetCarReferencesList();
+
+        bool Authenticate(string nickname, int password, out string message);
     }
 }

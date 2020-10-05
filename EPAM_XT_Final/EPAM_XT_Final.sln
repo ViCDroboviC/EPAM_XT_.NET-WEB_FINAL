@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{43515A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "common\Entities\Entities.csproj", "{744D806E-956B-409A-9EF0-D057D1A47AAE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL.Common", "BLL.Common\BLL.Common.csproj", "{879863DC-9847-43E4-81C7-164303A5A3A2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL.Contracts", "BLL.Common\BLL.Contracts.csproj", "{879863DC-9847-43E4-81C7-164303A5A3A2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBHelper", "DBHelper\DBHelper.csproj", "{F069DB2B-1499-4C22-B007-D2EA7E61FEA3}"
 EndProject

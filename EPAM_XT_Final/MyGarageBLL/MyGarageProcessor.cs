@@ -15,6 +15,8 @@ namespace MyGarageBLL
 
         private List<CarReference> CarReferencesList;
 
+        private User currentUser;
+
         public MyGarageProcessor()
         {
         }
@@ -28,25 +30,37 @@ namespace MyGarageBLL
 
         public User GetUserInfo()
         {
-            var wantedUser = dal.GetUser("ViCDroboviC");
-
-            wantedUser.CarsList = dal.GetCarsByOwnerId(wantedUser.id);
-
-            foreach (Car car in wantedUser.CarsList)
-            {
-                var carReference = CarReferencesList.FirstOrDefault(carRef => carRef.id == car.referenceId);
-
-                string fullName = carReference.vendor + " " + carReference.model;
-
-                car.fullName = fullName;
-            }
-
-            return wantedUser;
+            return currentUser;
         }
 
         public List<CarReference> GetCarReferencesList()
         {
             return CarReferencesList;
+        }
+
+        public bool Authenticate(string nickname, int password, out string message)
+        {
+            var wantedUser = dal.GetUser(nickname);
+            if(wantedUser != null)
+            {
+                if (wantedUser.userName.ToLower() == nickname.ToLower() && wantedUser.password == password)
+                {
+                    currentUser = wantedUser;
+                    currentUser.CarsList = dal.GetCarsByOwnerId(currentUser.id);
+                    foreach (Car car in wantedUser.CarsList)
+                    {
+                        var carReference = CarReferencesList.FirstOrDefault(carRef => carRef.id == car.referenceId);
+
+                        string fullName = carReference.vendor + " " + carReference.model;
+
+                        car.fullName = fullName;
+                    }
+                    message = null;
+                    return true;
+                }
+            }
+            message = "Введено неправильное имя пользователя или пароль!";
+            return false;
         }
     }
 }

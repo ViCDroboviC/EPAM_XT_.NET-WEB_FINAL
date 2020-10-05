@@ -50,9 +50,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BLL.Common\BLL.Common.csproj">
+    <ProjectReference Include="..\BLL.Common\BLL.Contracts.csproj">
       <Project>{879863dc-9847-43e4-81c7-164303a5a3a2}</Project>
-      <Name>BLL.Common</Name>
+      <Name>BLL.Contracts</Name>
     </ProjectReference>
     <ProjectReference Include="..\common\Entities\Entities.csproj">
       <Project>{744d806e-956b-409a-9ef0-d057d1a47aae}</Project>

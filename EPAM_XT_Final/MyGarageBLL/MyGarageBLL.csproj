@@ -45,9 +45,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BLL.Common\BLL.Common.csproj">
+    <ProjectReference Include="..\BLL.Common\BLL.Contracts.csproj">
       <Project>{879863DC-9847-43E4-81C7-164303A5A3A2}</Project>
-      <Name>BLL.Common</Name>
+      <Name>BLL.Contracts</Name>
     </ProjectReference>
     <ProjectReference Include="..\common\Entities\Entities.csproj">
       <Project>{744D806E-956B-409A-9EF0-D057D1A47AAE}</Project>

@@ -114,9 +114,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BLL.Common\BLL.Common.csproj">
+    <ProjectReference Include="..\BLL.Common\BLL.Contracts.csproj">
       <Project>{879863dc-9847-43e4-81c7-164303a5a3a2}</Project>
-      <Name>BLL.Common</Name>
+      <Name>BLL.Contracts</Name>
     </ProjectReference>
     <ProjectReference Include="..\common\Entities\Entities.csproj">
       <Project>{744D806E-956B-409A-9EF0-D057D1A47AAE}</Project>

@@ -1,16 +1,43 @@
-﻿@{
+﻿@using Entities;
+@using PL.pages;
+@using DependencyResolver;
+@{
     Layout = "~/pages/_basicLayout.cshtml";
 
-    string message = "ldfjnlzfdn";
+    string message = null;
+    string nickname = null;
+    int password;
+
+    var bll = Resolver.bll;
+
+    if (IsPost)
+    {
+        var _nickname = Request["nickname"];
+        var _password = Request["password"];
+        if (string.IsNullOrWhiteSpace(_nickname) || string.IsNullOrWhiteSpace(_password))
+        {
+            message = "Пожалуйста заполните все поля!";
+        }
+        else
+        {
+            nickname = _nickname;
+            password = _password.GetHashCode();
+            if(bll.Authenticate(nickname, password, out message))
+            {
+                FormsAuthentication.SetAuthCookie(nickname, true);
+                Response.Redirect("~/pages/index.cshtml");
+            }
+        }
+    }
 }
 
 <section id="authenticationForm">
-    <form action="~/pages/index.cshtml" method="post">
+    <form action="~/pages/Authentication.cshtml" method="post">
         <p><input type="text" name="nickname" placeholder="Введите имя пользователя" /></p>
         <p><input type="password" name="password" placeholder="Пароль" /></p>
-        @if(message != null)
+        @if (IsPost || message != null)
         {
-            <p>@message</p>
+            <p id="warning">@message</p>
         }
         <p><button>войти</button></p>
     </form>
