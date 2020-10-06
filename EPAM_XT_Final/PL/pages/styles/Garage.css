@@ -49,11 +49,16 @@ section#carinfo{
     padding:          15px;
     vertical-align: top;
 }
+
+#signOut{
+  float: right;
+  margin-right: 25px;
+}
   
   #mycars {
     display: table-cell;
     background:       #aaaaaa;
-    width: 30%;
+    width: 10%;
     min-width: 400px;
     font-size:        105%;
     padding:          15px;

@@ -15,16 +15,26 @@
 <body>
     <div id="filter" onclick="Hide()"></div>
     <div id="modalForm">
-        <span>Введите ваш пробег:</span>
-        <input id="Head" type="text" value="0">
-        <hr>
-        <div id="carRefList">
-            @RenderPage("~/pages/_carRefsList.cshtml")
-        </div>
+        <form action="~/pages/index.cshtml" method="post">
+            <span>Введите ваш пробег:</span>
+            <input id="Head" type="text" value="0">
+            <hr>
+            <div id="carRefList">
+                <p>Выберите ваш автомобиль:</p>
+                @RenderPage("~/pages/_carRefsList.cshtml")
+            </div>
+        </form>
         <button id="close" onclick="Hide()">Закрыть</button>
     </div>
     <header class="top">
         <img src="images/header.gif" alt="Изображение для верхнего колонтитула кафе Starbuzz">
+        <div id="signOut">
+            @if (User.Identity.IsAuthenticated)
+            {
+                <p>Вошел как: @User.Identity.Name</p>
+                <a href="~/pages/signOut.cshtml">выйти</a>
+            }
+        </div>
     </header>
     <nav>
         <ul>
