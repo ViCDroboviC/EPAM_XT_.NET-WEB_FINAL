@@ -14,18 +14,7 @@
 </head>
 <body>
     <div id="filter" onclick="Hide()"></div>
-    <div id="modalForm">
-        <form action="~/pages/index.cshtml" method="post">
-            <span>Введите ваш пробег:</span>
-            <input id="Head" type="text" value="0">
-            <hr>
-            <div id="carRefList">
-                <p>Выберите ваш автомобиль:</p>
-                @RenderPage("~/pages/_carRefsList.cshtml")
-            </div>
-        </form>
-        <button id="close" onclick="Hide()">Закрыть</button>
-    </div>
+    @RenderPage("~/pages/_carRefsList.cshtml")
     <header class="top">
         <img src="images/header.gif" alt="Изображение для верхнего колонтитула кафе Starbuzz">
         <div id="signOut">
@@ -38,7 +27,7 @@
     </header>
     <nav>
         <ul>
-            <li class="selected"><a href="index.html">ДОМОЙ</a></li>
+            <li class="selected"><a href="~/pages/index.cshtml">ДОМОЙ</a></li>
             <li><a href="blog.html">БЛОГ</a></li>
         </ul>
     </nav>

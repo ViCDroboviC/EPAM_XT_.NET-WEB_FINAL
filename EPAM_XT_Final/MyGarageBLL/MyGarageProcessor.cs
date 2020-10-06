@@ -46,15 +46,7 @@ namespace MyGarageBLL
                 if (wantedUser.userName.ToLower() == nickname.ToLower() && wantedUser.password == password)
                 {
                     currentUser = wantedUser;
-                    currentUser.CarsList = dal.GetCarsByOwnerId(currentUser.id);
-                    foreach (Car car in wantedUser.CarsList)
-                    {
-                        var carReference = CarReferencesList.FirstOrDefault(carRef => carRef.id == car.referenceId);
-
-                        string fullName = carReference.vendor + " " + carReference.model;
-
-                        car.fullName = fullName;
-                    }
+                    initializeUserGarage();
                     message = null;
                     return true;
                 }
@@ -76,6 +68,34 @@ namespace MyGarageBLL
                 dal.AddUser(new User(nickname, password));
                 message = "Регистрация прошла успешно!";
                 return true;
+            }
+        }
+
+        public void AddCarIntoUserGarage(int mileage, int carRefId)
+        {
+            var carRef = CarReferencesList.FirstOrDefault(reference => reference.id == carRefId);
+            var nextOilRefresh = carRef.nextOilRefresh - mileage;
+            var newEngine = carRef.engineResource - mileage;
+            var newTimingDrive = carRef.timingDriveResource - mileage;
+            var newGearbox = carRef.gearboxResource - mileage;
+            var newSuspension = carRef.suspensionResource - mileage;
+            var newSteering = carRef.steeringResource - mileage;
+            var newBrakes = carRef.brakesResource - mileage;
+            Car newCar = new Car(currentUser.id, carRefId, mileage, nextOilRefresh, newEngine, newTimingDrive, newSuspension, newGearbox, newSteering, newBrakes);
+            dal.AddCar(newCar);
+            initializeUserGarage();
+        }
+
+        private void initializeUserGarage()
+        {
+            currentUser.CarsList = dal.GetCarsByOwnerId(currentUser.id);
+            foreach (Car car in currentUser.CarsList)
+            {
+                var carReference = CarReferencesList.FirstOrDefault(carRef => carRef.id == car.referenceId);
+
+                string fullName = carReference.vendor + " " + carReference.model;
+
+                car.fullName = fullName;
             }
         }
     }

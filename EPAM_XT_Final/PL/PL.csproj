@@ -93,6 +93,7 @@
   <ItemGroup>
     <Compile Include="pages\CarContainer.cs" />
     <Compile Include="pages\CarRefsContainer.cs" />
+    <Compile Include="pages\MessageContainer.cs" />
     <Compile Include="pages\UserContainer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

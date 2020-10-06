@@ -17,5 +17,7 @@ namespace BLL.Common
         bool Authenticate(string nickname, int password, out string message);
 
         bool RegisterNewUser(string nickname, int password, out string message);
+
+        void AddCarIntoUserGarage(int mileage, int carRefId);
     }
 }

@@ -8,6 +8,22 @@ namespace Entities
 {
     public class Car
     {
+        public Car(int ownerId, int referenceId, int totalMileage, int nextOilRefresh, int remainingEngineRes,
+    int remainingTimingDriveRes, int remainingSuspensionRes, int remainingGearboxRes, int remainingSteeringRes,
+    int remainingBrakesRes)
+        {
+            this.ownerId = ownerId;
+            this.referenceId = referenceId;
+            this.totalMileage = totalMileage;
+            this.nextOilRefresh = nextOilRefresh;
+            this.remainingEngineRes = remainingEngineRes;
+            this.remainingTimingDriveRes = remainingTimingDriveRes;
+            this.remainingSuspensionRes = remainingSuspensionRes;
+            this.remainingGearboxRes = remainingGearboxRes;
+            this.remainingSteeringRes = remainingSteeringRes;
+            this.remainingBrakesRes = remainingBrakesRes;
+            fullName = null;
+        }
         public Car(int id, int ownerId, int referenceId, int totalMileage, int nextOilRefresh, int remainingEngineRes,
             int remainingTimingDriveRes, int remainingSuspensionRes, int remainingGearboxRes, int remainingSteeringRes,
             int remainingBrakesRes)

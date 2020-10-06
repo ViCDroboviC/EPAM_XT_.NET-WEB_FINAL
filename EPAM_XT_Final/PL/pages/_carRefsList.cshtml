@@ -5,17 +5,63 @@
 @{
     Layout = null;
 
+    string message = null;
+    int mileage;
+    int carRefId;
+
     var bll = Resolver.bll;
 
     CarRefsContainer.refList = bll.GetCarReferencesList();
-}
-<ol>
-    @{
-        foreach (CarReference reference in CarRefsContainer.refList)
+
+    if (IsPost)
+    {
+        if (int.TryParse(Request["mileage"], out mileage) == false)
         {
-            CarRefsContainer.currentRef = reference;
-            @RenderPage("~/pages/_CarRefView.cshtml")
+            MessageContainer.message = "Введен некорректный пробег! Пожалуйста, введите пробег в виде целого числа.";
+        }
+        else if (int.TryParse(Request["carModel"], out carRefId) == false || carRefId == 0)
+        {
+            MessageContainer.message = "Не выбран автомобиль!";
+        }
+        else if (int.TryParse(Request["mileage"], out mileage) || int.TryParse(Request["carModel"], out carRefId))
+        {
+            MessageContainer.message = null;
+            bll.AddCarIntoUserGarage(mileage, carRefId);
+            Response.Redirect("~/pages/index.cshtml");
+        }
+        else
+        {
+            MessageContainer.message = "Произошла непредвиденная ошибка!";
         }
     }
-</ol>
+}
+<div id="modalForm">
+    <form action="~/pages/index.cshtml" method="post">
+        <span>Введите ваш пробег:</span>
+        <input id="Head" type="text" name="mileage" value="0">
+        <hr>
+        <div id="carRefList">
+            <p>Выберите ваш автомобиль:</p>
+            @{
+                foreach (CarReference reference in CarRefsContainer.refList)
+                {
+                    CarRefsContainer.currentRef = reference;
+                    @RenderPage("~/pages/_CarRefView.cshtml")
+                }
+            }
+        </div>
+        <p><button type="submit">добавить</button></p>
+    </form>
+    @if (IsPost ||MessageContainer.message != null)
+    {
+        <p id="warning">@MessageContainer.message</p>
+    }
+    else
+    {
+        <p>В случае ошибки при обработке данных ввода, здесь появится сообщение об ошибке.</p>
+    }
+    <button id="close" onclick="Hide()">Закрыть</button>
+</div>
+
+
 
