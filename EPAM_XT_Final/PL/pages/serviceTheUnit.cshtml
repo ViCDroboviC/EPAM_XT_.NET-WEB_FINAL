@@ -1,0 +1,14 @@
+﻿@using Entities;
+@using PL.pages;
+@using DependencyResolver;
+@{
+
+    var bll = Resolver.bll;
+    var car = CarContainer.currentCar;
+    var success = int.TryParse(Request["action"], out int action);
+
+    bll.ServiceTheCar(action, car);
+
+    Response.Redirect("~/pages/carinfo.cshtml?id=" + @car.id);
+}
+

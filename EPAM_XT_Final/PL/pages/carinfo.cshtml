@@ -65,42 +65,141 @@
     }
     <p>
         <h3>Масло</h3>
-        <span>До следующей замены масла</span><span>@carToDisplay.nextOilRefresh</span><span> км</span><br>
-        <button>проведена замена масла</button>
+        <span>До следующей замены масла</span>
+        @if (carToDisplay.nextOilRefresh > 200)
+        {
+            <span>@carToDisplay.nextOilRefresh</span><span> км</span>
+        }
+        else
+        {
+            <strong>Замените масло!</strong>
+        }
+        <br>
     </p>
+    <form action="~/pages/serviceTheUnit.cshtml" method="get">
+        <input type="hidden" name="action" value="0" />
+        <button type="submit">проведена замена масла</button>
+    </form>
+
     <p>
         <h3>Привод ГРМ</h3>
-        <span>Ресурс до замены: </span><span>@carToDisplay.remainingTimingDriveRes</span><span> км</span><br>
-        <button>Проведено техобслуживание</button>
+        <span>Ресурс до замены: </span>
+        @if (carToDisplay.remainingTimingDriveRes > 5000)
+        {
+            <span>@carToDisplay.remainingTimingDriveRes</span><span> км</span>
+        }
+        else
+        {
+            <strong>Узел требует ремонта!</strong>
+        }
+        <br>
     </p>
+    <form action="~/pages/serviceTheUnit.cshtml" method="get">
+        <input type="hidden" name="action" value="1" />
+        <button type="submit">Проведено техобслуживание</button>
+    </form>
+
     <p>
         <h3>Силовая установка</h3>
-        <span>Ресурс до обслуживания: </span><span>@carToDisplay.remainingEngineRes</span><span> км</span><br>
-        <button>Проведено техобслуживание</button>
+        <span>Ресурс до обслуживания: </span>
+        @if (carToDisplay.remainingEngineRes > 10000)
+        {
+            <span>@carToDisplay.remainingEngineRes</span><span> км</span>
+        }
+        else
+        {
+            <strong>Узел требует ремонта!</strong>
+        }
+        <br>
     </p>
+    <form action="~/pages/serviceTheUnit.cshtml" method="get">
+        <input type="hidden" name="action" value="2" />
+        <button type="submit">Проведено техобслуживание</button>
+    </form>
+
+    <p>
+        <h3>КПП</h3>
+        <span>Ресурс до замены: </span>
+        @if (carToDisplay.remainingGearboxRes > 10000)
+        {
+            <span>@carToDisplay.remainingGearboxRes</span><span> км</span>
+        }
+        else
+        {
+            <strong>Узел требует ремонта!</strong>
+        }
+        <br>
+    </p>
+    <form action="~/pages/serviceTheUnit.cshtml" method="get">
+        <input type="hidden" name="action" value="3" />
+        <button type="submit">Проведено техобслуживание</button>
+    </form>
+
     <p>
         <h3>Детали подвески</h3>
-        <span>Ресурс до замены: </span><span>@carToDisplay.remainingSuspensionRes</span><span> км</span><br>
-        <button>Проведено техобслуживание</button>
+        <span>Ресурс до замены: </span>
+        @if (carToDisplay.remainingSuspensionRes > 5000)
+        {
+            <span>@carToDisplay.remainingSuspensionRes</span><span> км</span>
+        }
+        else
+        {
+            <strong>Узел требует ремонта!</strong>
+        }
+        <br>
     </p>
+    <form action="~/pages/serviceTheUnit.cshtml" method="get">
+        <input type="hidden" name="action" value="4" />
+        <button type="submit">Проведено техобслуживание</button>
+    </form>
+
     <p>
         <h3>Рулевое управление</h3>
-        <span>Ресурс до замены: </span><span>@carToDisplay.remainingSteeringRes</span><span> км</span><br>
-        <button>Проведено техобслуживание</button>
+        <span>Ресурс до замены: </span>
+        @if (carToDisplay.remainingSteeringRes > 5000)
+        {
+            <span>@carToDisplay.remainingSteeringRes</span><span> км</span>
+        }
+        else
+        {
+            <strong>Узел требует ремонта!</strong>
+        }
+
+        <br>
     </p>
+    <form action="~/pages/serviceTheUnit.cshtml" method="get">
+        <input type="hidden" name="action" value="5" />
+        <button type="submit">Проведено техобслуживание</button>
+    </form>
+
     <p>
         <h3>Тормозная система</h3>
-        <span>Ресурс до замены: </span><span>@carToDisplay.remainingBrakesRes</span><span> км</span><br>
-        <button>Проведено техобслуживание</button>
+        <span>Ресурс до замены: </span>
+        @if (carToDisplay.remainingBrakesRes > 5000)
+        {
+            <span>@carToDisplay.remainingBrakesRes</span><span> км</span>
+        }
+        else
+        {
+            <strong>Узел требует ремонта!</strong>
+        }
+        <br>
     </p>
+    <form action="~/pages/serviceTheUnit.cshtml" method="get">
+        <input type="hidden" name="action" value="6" />
+        <button type="submit">Проведено техобслуживание</button>
+    </form>
 </section>
 
 <section id="mycars">
     <h2>Мой гараж:</h2>
-    @foreach (Car car in currentUser.CarsList)
-    {
-        CarContainer.currentCar = car;
-        @RenderPage("~/pages/_UserGarage.cshtml")
+    @{
+        foreach (Car car in currentUser.CarsList)
+        {
+            CarContainer.currentCar = car;
+            @RenderPage("~/pages/_UserGarage.cshtml")
+        }
+        CarContainer.currentCar = carToDisplay;
     }
     <button id="addCarToGarage" onclick="show()">добавить</button>
 </section>

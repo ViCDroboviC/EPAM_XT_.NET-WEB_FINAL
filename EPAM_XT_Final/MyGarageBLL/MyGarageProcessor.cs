@@ -41,7 +41,7 @@ namespace MyGarageBLL
         public bool Authenticate(string nickname, int password, out string message)
         {
             var wantedUser = dal.GetUser(nickname);
-            if(wantedUser != null)
+            if (wantedUser != null)
             {
                 if (wantedUser.userName.ToLower() == nickname.ToLower() && wantedUser.password == password)
                 {
@@ -56,7 +56,7 @@ namespace MyGarageBLL
         }
 
         public bool RegisterNewUser(string nickname, int password, out string message)
-        {           
+        {
             List<string> existingNicknames = dal.GetAllNicknames();
             if (existingNicknames.Contains(nickname, StringComparer.InvariantCultureIgnoreCase))
             {
@@ -103,6 +103,128 @@ namespace MyGarageBLL
                 remainingGearboxRes, remainingSteeringRes, remainingBrakesRes);
 
             dal.RefreshCarData(car);
+            initializeUserGarage();
+        }
+
+        public void ServiceTheCar(int action, Car car)
+        {
+            var reference = CarReferencesList.FirstOrDefault(item => item.id == car.referenceId);
+            Car servicedCar = null;
+
+            switch (action)
+            {
+                case 0:
+                    int nextOilRefresh = ResourceCalculator.RefreshUnitResource(action, reference);
+                    servicedCar = new Car(car.id,
+                        currentUser.id,
+                        car.referenceId,
+                        car.totalMileage,
+                        nextOilRefresh,
+                        car.remainingEngineRes,
+                        car.remainingTimingDriveRes,
+                        car.remainingSuspensionRes,
+                        car.remainingGearboxRes,
+                        car.remainingSteeringRes,
+                        car.remainingBrakesRes);
+
+                    dal.RefreshCarData(servicedCar);
+                    break;
+                case 1:
+                    int remainingTimingDriveRes = ResourceCalculator.RefreshUnitResource(action, reference);
+                    servicedCar = new Car(car.id,
+                        currentUser.id,
+                        car.referenceId,
+                        car.totalMileage,
+                        car.nextOilRefresh,
+                        car.remainingEngineRes,
+                        remainingTimingDriveRes,
+                        car.remainingSuspensionRes,
+                        car.remainingGearboxRes,
+                        car.remainingSteeringRes,
+                        car.remainingBrakesRes);
+
+                    dal.RefreshCarData(servicedCar);
+                    break;
+                case 2:
+                    int remainingEngineRes = ResourceCalculator.RefreshUnitResource(action, reference);
+                    servicedCar = new Car(car.id,
+                        currentUser.id,
+                        car.referenceId,
+                        car.totalMileage,
+                        car.nextOilRefresh,
+                        remainingEngineRes,
+                        car.remainingTimingDriveRes,
+                        car.remainingSuspensionRes,
+                        car.remainingGearboxRes,
+                        car.remainingSteeringRes,
+                        car.remainingBrakesRes);
+
+                    dal.RefreshCarData(servicedCar);
+                    break;
+                case 3:
+                    int remainingGearboxRes = ResourceCalculator.RefreshUnitResource(action, reference);
+                    servicedCar = new Car(car.id,
+                        currentUser.id,
+                        car.referenceId,
+                        car.totalMileage,
+                        car.nextOilRefresh,
+                        car.remainingEngineRes,
+                        car.remainingTimingDriveRes,
+                        car.remainingSuspensionRes,
+                        remainingGearboxRes,
+                        car.remainingSteeringRes,
+                        car.remainingBrakesRes);
+
+                    dal.RefreshCarData(servicedCar);
+                    break;
+                case 4:
+                    int remainingSuspensionRes = ResourceCalculator.RefreshUnitResource(action, reference);
+                    servicedCar = new Car(car.id,
+                        currentUser.id,
+                        car.referenceId,
+                        car.totalMileage,
+                        car.nextOilRefresh,
+                        car.remainingEngineRes,
+                        car.remainingTimingDriveRes,
+                        remainingSuspensionRes,
+                        car.remainingGearboxRes,
+                        car.remainingSteeringRes,
+                        car.remainingBrakesRes);
+
+                    dal.RefreshCarData(servicedCar);
+                    break;
+                case 5:
+                    int remainingSteeringRes = ResourceCalculator.RefreshUnitResource(action, reference);
+                    servicedCar = new Car(car.id,
+                        currentUser.id,
+                        car.referenceId,
+                        car.totalMileage,
+                        car.nextOilRefresh,
+                        car.remainingEngineRes,
+                        car.remainingTimingDriveRes,
+                        car.remainingSuspensionRes,
+                        car.remainingGearboxRes,
+                        remainingSteeringRes,
+                        car.remainingBrakesRes);
+
+                    dal.RefreshCarData(servicedCar);
+                    break;
+                case 6:
+                    int remainingBrakesRes = ResourceCalculator.RefreshUnitResource(action, reference);
+                    servicedCar = new Car(car.id,
+                        currentUser.id,
+                        car.referenceId,
+                        car.totalMileage,
+                        car.nextOilRefresh,
+                        car.remainingEngineRes,
+                        car.remainingTimingDriveRes,
+                        car.remainingSuspensionRes,
+                        car.remainingGearboxRes,
+                        car.remainingSteeringRes,
+                        remainingBrakesRes);
+                    dal.RefreshCarData(servicedCar);
+                    break;
+            }
             initializeUserGarage();
         }
 

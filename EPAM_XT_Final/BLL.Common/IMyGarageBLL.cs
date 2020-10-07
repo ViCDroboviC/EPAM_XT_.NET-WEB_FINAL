@@ -21,5 +21,7 @@ namespace BLL.Common
         void AddCarIntoUserGarage(int mileage, int carRefId);
 
         void RfreshCarMileage(int carId, int newMileage);
+
+        void ServiceTheCar(int action, Car car);
     }
 }
