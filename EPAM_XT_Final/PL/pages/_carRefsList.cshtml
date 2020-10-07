@@ -38,12 +38,12 @@
 <div id="modalForm">
     <form action="~/pages/index.cshtml" method="post">
         <span>Введите ваш пробег:</span>
-        <input id="Head" type="text" name="mileage" value="0">
+        <input id="Head" type="number" name="mileage" value="0">
         <hr>
         <div id="carRefList">
             <p>Выберите ваш автомобиль:</p>
             @{
-                foreach (CarReference reference in CarRefsContainer.refList)
+                foreach (CarReference reference in CarRefsContainer.refList)//TODO попробовать перенести в индекс и дописать редиректы во всех ветках if(IsPost)
                 {
                     CarRefsContainer.currentRef = reference;
                     @RenderPage("~/pages/_CarRefView.cshtml")

@@ -189,6 +189,13 @@ namespace DBHelper
                     CommandType = CommandType.StoredProcedure
                 };
 
+                var id = new SqlParameter("@id", SqlDbType.Int)
+                {
+                    Value = car.id
+                };
+
+                command.Parameters.Add(id);
+
                 var nextOilRefresh = new SqlParameter("@nextOilRefresh", SqlDbType.Int)
                 {
                     Value = car.nextOilRefresh

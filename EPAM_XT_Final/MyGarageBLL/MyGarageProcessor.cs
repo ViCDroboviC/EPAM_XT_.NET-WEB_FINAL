@@ -86,6 +86,26 @@ namespace MyGarageBLL
             initializeUserGarage();
         }
 
+        public void RfreshCarMileage(int carId, int newMileage)
+        {
+            var car = currentUser.CarsList.FirstOrDefault(item => item.id == carId); //Получаем автомобиль из списка авто текущего пользователя по id
+            var delta = newMileage - car.totalMileage;
+
+            var nextOilRefresh = ResourceCalculator.CalculateRemainingResourceOfUnit(delta, car.nextOilRefresh);
+            var remainingEngineRes = ResourceCalculator.CalculateRemainingResourceOfUnit(delta, car.remainingEngineRes);
+            var remainingTimingDriveRes = ResourceCalculator.CalculateRemainingResourceOfUnit(delta, car.remainingTimingDriveRes);
+            var remainingSuspensionRes = ResourceCalculator.CalculateRemainingResourceOfUnit(delta, car.remainingSuspensionRes);
+            var remainingGearboxRes = ResourceCalculator.CalculateRemainingResourceOfUnit(delta, car.remainingGearboxRes);
+            var remainingSteeringRes = ResourceCalculator.CalculateRemainingResourceOfUnit(delta, car.remainingSteeringRes);
+            var remainingBrakesRes = ResourceCalculator.CalculateRemainingResourceOfUnit(delta, car.remainingBrakesRes);
+
+            car = new Car(carId, currentUser.id, car.referenceId, newMileage, nextOilRefresh, remainingEngineRes, remainingTimingDriveRes, remainingSuspensionRes,
+                remainingGearboxRes, remainingSteeringRes, remainingBrakesRes);
+
+            dal.RefreshCarData(car);
+            initializeUserGarage();
+        }
+
         private void initializeUserGarage()
         {
             currentUser.CarsList = dal.GetCarsByOwnerId(currentUser.id);

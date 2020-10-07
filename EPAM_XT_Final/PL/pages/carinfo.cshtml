@@ -4,8 +4,13 @@
 @using DependencyResolver;
 @{
     Layout = "~/pages/_basicLayout.cshtml";
+    var bll = Resolver.bll;
+
+    UserContainer.currentUser = bll.GetUserInfo();
 
     var currentUser = UserContainer.currentUser;
+
+    string message = null;
 
     string tag = Request.QueryString["id"];
     var success = Int32.TryParse(tag, out int carId);
@@ -16,13 +21,48 @@
     }
 
     var carToDisplay = CarContainer.currentCar;
+
+    var mileageToSet = Request["mileAgeDelta"];
+    int newMileage;
+
+    if (IsPost)
+    {
+        if (int.TryParse(mileageToSet, out newMileage))
+        {
+            int.TryParse(mileageToSet, out newMileage);
+            if (newMileage < carToDisplay.totalMileage)
+            {
+                message = "Текущий пробег не может быть меньше предыдущего.";
+            }
+            else if (newMileage > carToDisplay.totalMileage)
+            {
+                message = null;
+
+                bll.RfreshCarMileage(carToDisplay.id, newMileage);
+                Response.Redirect("~/pages/carinfo.cshtml?id=" + @carToDisplay.id);
+            }
+            else
+            {
+                message = "Непредвиденная ошибка";
+
+            }
+        }
+    }
 }
 <section id="carinfo">
     <p>
         <h2>@carToDisplay.fullName</h2>
         <span>Общий пробег: </span><span>@carToDisplay.totalMileage</span><span> км</span>
-        <button>изменить</button>
+
     </p>
+    <form action="~/pages/carinfo.cshtml?id=@carToDisplay.id" method="post">
+        <input type="number" name="mileAgeDelta" placeholder="Текущий пробег" />
+        <button type="submit">обновить пробег</button>
+    </form>
+    @if (message != null)
+    {
+        <p id="warning">@message</p>
+    }
     <p>
         <h3>Масло</h3>
         <span>До следующей замены масла</span><span>@carToDisplay.nextOilRefresh</span><span> км</span><br>
