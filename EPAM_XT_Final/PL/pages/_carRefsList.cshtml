@@ -13,6 +13,8 @@
 
     CarRefsContainer.refList = bll.GetCarReferencesList();
 
+    MessageContainer.message = null;
+
     if (IsPost)
     {
         if (int.TryParse(Request["mileage"], out mileage) == false)
