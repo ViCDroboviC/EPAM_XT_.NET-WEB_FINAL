@@ -228,6 +228,15 @@ namespace MyGarageBLL
             initializeUserGarage();
         }
 
+        public void DeleteCar(Car carToDelete)
+        {
+            int id = carToDelete.id;
+
+            dal.DeleteCarById(id);
+
+            initializeUserGarage();
+        }
+
         private void initializeUserGarage()
         {
             currentUser.CarsList = dal.GetCarsByOwnerId(currentUser.id);

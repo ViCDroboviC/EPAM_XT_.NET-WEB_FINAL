@@ -1,0 +1,11 @@
+
+CREATE PROCEDURE dbo.Cars_DeleteById
+	@id int
+AS
+BEGIN
+
+	SET NOCOUNT ON;
+	DELETE FROM Cars
+	WHERE id = @id
+END
+GO

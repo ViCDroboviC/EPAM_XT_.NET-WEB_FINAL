@@ -1,0 +1,14 @@
+﻿@using Entities;
+@using PL.pages;
+@using DependencyResolver;
+@{
+    Layout = null;
+
+    var bll = Resolver.bll;
+
+    var car = CarContainer.currentCar;
+
+    bll.DeleteCar(car);
+
+    Response.Redirect("~/pages/index.cshtml");
+}

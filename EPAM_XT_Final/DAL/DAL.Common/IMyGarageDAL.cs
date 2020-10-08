@@ -20,5 +20,7 @@ namespace DAL.Common
         void RefreshCarData(Car car); //Обновление пробега
 
         List<string> GetAllNicknames(); //Получение всех никнеймов для проверки возможности создания нового пользователя
+
+        void DeleteCarById(int id); //Удаление авто по Id
     }
 }

@@ -4,7 +4,6 @@ using System.Data;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Configuration;
-using System.Data.SqlTypes;
 
 namespace DBHelper
 {
@@ -57,6 +56,11 @@ namespace DBHelper
         {
             List<string> usernames = new List<string>(GetAllUsernames());
             return usernames;
+        }
+
+        public void DeleteCarById(int id)
+        {
+            DeleteCar(id);
         }
 
         private void AddUserToDB(User newUser)
@@ -429,5 +433,28 @@ namespace DBHelper
             }
         }
 
+        private void DeleteCar(int carId)
+        {
+            using (connection = new SqlConnection(_connectionString))
+            {
+                var storedProcedure = "dbo.Cars_DeleteById";
+
+                var command = new SqlCommand(storedProcedure, connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                var id = new SqlParameter("@id", SqlDbType.Int)
+                {
+                    Value = carId
+                };
+
+                command.Parameters.Add(id);
+
+                connection.Open();
+
+                var reader = command.ExecuteReader();
+            }
+        }
     }
 }

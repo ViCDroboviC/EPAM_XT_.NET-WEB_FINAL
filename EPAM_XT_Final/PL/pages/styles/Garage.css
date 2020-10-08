@@ -82,14 +82,14 @@ section#carinfo{
   .slogan { color: #954b4b; }
   
   a:link {
-    color:            #b76666;
+    color:            #000000;  
     text-decoration:  none;
-    border-bottom:    thin dotted #b76666;
+    border-bottom:    thin dotted #000000;
   }
   a:visited {
-    color:            #675c47;
+    color:            #329400;
     text-decoration:  none;
-    border-bottom:    thin dotted #675c47;
+    border-bottom:    thin dotted #329400;
   }
 
   #award{

@@ -109,6 +109,7 @@
     <Content Include="pages\Authentication.cshtml" />
     <Content Include="pages\signOut.cshtml" />
     <Content Include="pages\serviceTheUnit.cshtml" />
+    <Content Include="pages\DeleteCar.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
