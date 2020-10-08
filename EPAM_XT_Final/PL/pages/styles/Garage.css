@@ -11,6 +11,10 @@ body {
     height:           108px;
   }
 
+  header img{
+    height: 108px;
+  }
+
   div#tableContainer{
     display: table;
     border-spacing: 10px;
@@ -94,8 +98,12 @@ section#carinfo{
 
   #award{
     position: absolute;
-    top: 30px;
-    left: 49%;
+    top: -7px;
+    left: 40%;
+  }
+
+  #award img{
+    height: 360px;
   }
 
 nav{

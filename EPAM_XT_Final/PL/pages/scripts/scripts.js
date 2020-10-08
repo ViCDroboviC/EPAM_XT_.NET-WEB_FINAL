@@ -22,7 +22,6 @@ var show = function(){
 var Hide = function(){
     document.getElementById('modalForm').style.display = 'none';
     document.getElementById('filter').style.display = 'none';
-    ClearForm();
 }
 
 //addCarButton.onclick = show;
