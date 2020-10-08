@@ -17,12 +17,15 @@ namespace MyGarageBLL
 
         private User currentUser;
 
+        private ResourceCalculator resCalculator;
+
         public MyGarageProcessor()
         {
         }
 
         public MyGarageProcessor(IMyGarageDAL dal)
         {
+            resCalculator = new ResourceCalculator();
             this.dal = dal;
             CarReferencesList = dal.GetAllCarReferences();
         }
@@ -74,13 +77,13 @@ namespace MyGarageBLL
         public void AddCarIntoUserGarage(int mileage, int carRefId)
         {
             var carRef = CarReferencesList.FirstOrDefault(reference => reference.id == carRefId);
-            var nextOilRefresh = carRef.nextOilRefresh - mileage;
-            var newEngine = carRef.engineResource - mileage;
-            var newTimingDrive = carRef.timingDriveResource - mileage;
-            var newGearbox = carRef.gearboxResource - mileage;
-            var newSuspension = carRef.suspensionResource - mileage;
-            var newSteering = carRef.steeringResource - mileage;
-            var newBrakes = carRef.brakesResource - mileage;
+            var nextOilRefresh = resCalculator.CalculateResOfNewCar(carRef.nextOilRefresh, mileage);
+            var newEngine = resCalculator.CalculateResOfNewCar(carRef.engineResource, mileage);
+            var newTimingDrive = resCalculator.CalculateResOfNewCar(carRef.timingDriveResource, mileage);
+            var newGearbox = resCalculator.CalculateResOfNewCar(carRef.gearboxResource, mileage); 
+            var newSuspension = resCalculator.CalculateResOfNewCar(carRef.suspensionResource, mileage); 
+            var newSteering = resCalculator.CalculateResOfNewCar(carRef.steeringResource, mileage); 
+            var newBrakes = resCalculator.CalculateResOfNewCar(carRef.brakesResource, mileage);
             Car newCar = new Car(currentUser.id, carRefId, mileage, nextOilRefresh, newEngine, newTimingDrive, newSuspension, newGearbox, newSteering, newBrakes);
             dal.AddCar(newCar);
             initializeUserGarage();
@@ -91,13 +94,13 @@ namespace MyGarageBLL
             var car = currentUser.CarsList.FirstOrDefault(item => item.id == carId); //Получаем автомобиль из списка авто текущего пользователя по id
             var delta = newMileage - car.totalMileage;
 
-            var nextOilRefresh = ResourceCalculator.CalculateRemainingResourceOfUnit(delta, car.nextOilRefresh);
-            var remainingEngineRes = ResourceCalculator.CalculateRemainingResourceOfUnit(delta, car.remainingEngineRes);
-            var remainingTimingDriveRes = ResourceCalculator.CalculateRemainingResourceOfUnit(delta, car.remainingTimingDriveRes);
-            var remainingSuspensionRes = ResourceCalculator.CalculateRemainingResourceOfUnit(delta, car.remainingSuspensionRes);
-            var remainingGearboxRes = ResourceCalculator.CalculateRemainingResourceOfUnit(delta, car.remainingGearboxRes);
-            var remainingSteeringRes = ResourceCalculator.CalculateRemainingResourceOfUnit(delta, car.remainingSteeringRes);
-            var remainingBrakesRes = ResourceCalculator.CalculateRemainingResourceOfUnit(delta, car.remainingBrakesRes);
+            var nextOilRefresh = resCalculator.CalculateRemainingResourceOfUnit(delta, car.nextOilRefresh);
+            var remainingEngineRes = resCalculator.CalculateRemainingResourceOfUnit(delta, car.remainingEngineRes);
+            var remainingTimingDriveRes = resCalculator.CalculateRemainingResourceOfUnit(delta, car.remainingTimingDriveRes);
+            var remainingSuspensionRes = resCalculator.CalculateRemainingResourceOfUnit(delta, car.remainingSuspensionRes);
+            var remainingGearboxRes = resCalculator.CalculateRemainingResourceOfUnit(delta, car.remainingGearboxRes);
+            var remainingSteeringRes = resCalculator.CalculateRemainingResourceOfUnit(delta, car.remainingSteeringRes);
+            var remainingBrakesRes = resCalculator.CalculateRemainingResourceOfUnit(delta, car.remainingBrakesRes);
 
             car = new Car(carId, currentUser.id, car.referenceId, newMileage, nextOilRefresh, remainingEngineRes, remainingTimingDriveRes, remainingSuspensionRes,
                 remainingGearboxRes, remainingSteeringRes, remainingBrakesRes);
@@ -114,7 +117,7 @@ namespace MyGarageBLL
             switch (action)
             {
                 case 0:
-                    int nextOilRefresh = ResourceCalculator.RefreshUnitResource(action, reference);
+                    int nextOilRefresh = resCalculator.RefreshUnitResource(action, reference);
                     servicedCar = new Car(car.id,
                         currentUser.id,
                         car.referenceId,
@@ -130,7 +133,7 @@ namespace MyGarageBLL
                     dal.RefreshCarData(servicedCar);
                     break;
                 case 1:
-                    int remainingTimingDriveRes = ResourceCalculator.RefreshUnitResource(action, reference);
+                    int remainingTimingDriveRes = resCalculator.RefreshUnitResource(action, reference);
                     servicedCar = new Car(car.id,
                         currentUser.id,
                         car.referenceId,
@@ -146,7 +149,7 @@ namespace MyGarageBLL
                     dal.RefreshCarData(servicedCar);
                     break;
                 case 2:
-                    int remainingEngineRes = ResourceCalculator.RefreshUnitResource(action, reference);
+                    int remainingEngineRes = resCalculator.RefreshUnitResource(action, reference);
                     servicedCar = new Car(car.id,
                         currentUser.id,
                         car.referenceId,
@@ -162,7 +165,7 @@ namespace MyGarageBLL
                     dal.RefreshCarData(servicedCar);
                     break;
                 case 3:
-                    int remainingGearboxRes = ResourceCalculator.RefreshUnitResource(action, reference);
+                    int remainingGearboxRes = resCalculator.RefreshUnitResource(action, reference);
                     servicedCar = new Car(car.id,
                         currentUser.id,
                         car.referenceId,
@@ -178,7 +181,7 @@ namespace MyGarageBLL
                     dal.RefreshCarData(servicedCar);
                     break;
                 case 4:
-                    int remainingSuspensionRes = ResourceCalculator.RefreshUnitResource(action, reference);
+                    int remainingSuspensionRes = resCalculator.RefreshUnitResource(action, reference);
                     servicedCar = new Car(car.id,
                         currentUser.id,
                         car.referenceId,
@@ -194,7 +197,7 @@ namespace MyGarageBLL
                     dal.RefreshCarData(servicedCar);
                     break;
                 case 5:
-                    int remainingSteeringRes = ResourceCalculator.RefreshUnitResource(action, reference);
+                    int remainingSteeringRes = resCalculator.RefreshUnitResource(action, reference);
                     servicedCar = new Car(car.id,
                         currentUser.id,
                         car.referenceId,
@@ -210,7 +213,7 @@ namespace MyGarageBLL
                     dal.RefreshCarData(servicedCar);
                     break;
                 case 6:
-                    int remainingBrakesRes = ResourceCalculator.RefreshUnitResource(action, reference);
+                    int remainingBrakesRes = resCalculator.RefreshUnitResource(action, reference);
                     servicedCar = new Car(car.id,
                         currentUser.id,
                         car.referenceId,

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace MyGarageBLL
 {
-    public static class ResourceCalculator
+    public class ResourceCalculator
     {
-        public static int CalculateRemainingResourceOfUnit(int delta, int currentResource)
+        public int CalculateRemainingResourceOfUnit(int delta, int currentResource)
         {
             if(currentResource < delta)
             {
@@ -21,7 +21,7 @@ namespace MyGarageBLL
             }
         }
 
-        public static int RefreshUnitResource(int unit, CarReference reference)
+        public int RefreshUnitResource(int unit, CarReference reference)
         {
             switch (unit)
             {
@@ -42,6 +42,17 @@ namespace MyGarageBLL
                 default:
                     return 10;
             }
+        }
+
+        public int CalculateResOfNewCar(int refUnitRes, int mileage)
+        {
+            int expectedResOfServicedUnit = refUnitRes;
+            while (expectedResOfServicedUnit < mileage)
+            {
+                expectedResOfServicedUnit += refUnitRes;
+            }
+
+            return expectedResOfServicedUnit - mileage;
         }
     }
 }
