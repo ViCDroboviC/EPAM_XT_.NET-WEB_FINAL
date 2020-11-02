@@ -11,6 +11,8 @@ namespace DBHelper
     {
         private static SqlConnection connection = new SqlConnection(_connectionString);
 
+        private ManufacturersDataAccessor manufacturersAccessor = new ManufacturersDataAccessor(_connectionString);
+
         public MyGarageDBHelper() { }
 
         private static string _connectionString => ConfigurationManager.ConnectionStrings["DefaultDB"].ConnectionString;
@@ -284,7 +286,10 @@ namespace DBHelper
 
                 var reader = command.ExecuteReader();
 
-                var vendor = reader["vendor"] as string;
+                var manufacturerId = (int)reader["manufacturer"];
+
+                var vendor = manufacturersAccessor.GetManufacturerById(manufacturerId);
+
                 var model = reader["model"] as string;
                 var oilRefreshRate = (int)reader["oilRefreshRate"];
                 var engineResource = (int)reader["engineResource"];
@@ -346,7 +351,7 @@ namespace DBHelper
         {
             using (connection = new SqlConnection(_connectionString))
             {
-                var storedProcedure = "dbo.GetAll";
+                var storedProcedure = "dbo.CarReferences_GetAll";
 
                 var command = new SqlCommand(storedProcedure, connection)
                 {
@@ -360,7 +365,7 @@ namespace DBHelper
                 while (reader.Read())
                 {
                     var id = (int)reader["id"];
-                    var vendor = reader["vendor"] as string;
+                    var manufacturer = reader["manufacturer"] as string;
                     var model = reader["model"] as string;
                     var oilRefreshRate = (int)reader["oilRefreshRate"];
                     var engineResource = (int)reader["engineResource"];
@@ -370,7 +375,7 @@ namespace DBHelper
                     var steeringResource = (int)reader["steeringResource"];
                     var brakesResource = (int)reader["brakesResource"];
 
-                    yield return new CarReference(id, vendor, model, oilRefreshRate, engineResource, timingDriveResource, suspensionResource,
+                    yield return new CarReference(id, manufacturer, model, oilRefreshRate, engineResource, timingDriveResource, suspensionResource,
                         gearboxResource, steeringResource, brakesResource);
                 }
             }
@@ -453,7 +458,7 @@ namespace DBHelper
 
                 connection.Open();
 
-                var reader = command.ExecuteReader();
+                command.ExecuteReader();
             }
         }
     }
