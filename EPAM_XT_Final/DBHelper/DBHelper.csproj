@@ -42,7 +42,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ManufacturersDataAccessor.cs" />
+    <Compile Include="AbstractAccess.cs" />
+    <Compile Include="CarReferencesAccess.cs" />
+    <Compile Include="CarsAccess.cs" />
+    <Compile Include="UsersDataAccess.cs" />
     <Compile Include="MyGarageDBHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -75,6 +75,7 @@ namespace MyGarageBLL
         public void AddCarIntoUserGarage(int mileage, int carRefId)
         {
             var carRef = CarReferencesList.FirstOrDefault(reference => reference.id == carRefId);
+
             var nextOilRefresh = resCalculator.CalculateResOfNewCar(carRef.nextOilRefresh, mileage);
             var newEngine = resCalculator.CalculateResOfNewCar(carRef.engineResource, mileage);
             var newTimingDrive = resCalculator.CalculateResOfNewCar(carRef.timingDriveResource, mileage);

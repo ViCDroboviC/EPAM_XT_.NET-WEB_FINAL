@@ -1,6 +1,5 @@
 ﻿using DAL.Common;
 using Entities;
-using System.Data;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Configuration;
@@ -11,7 +10,11 @@ namespace DBHelper
     {
         private static SqlConnection connection = new SqlConnection(_connectionString);
 
-        private ManufacturersDataAccessor manufacturersAccessor = new ManufacturersDataAccessor(_connectionString);
+        private UsersDataAccess usersAccess = new UsersDataAccess(_connectionString);
+
+        private CarReferencesAccess carReferencesAccess = new CarReferencesAccess(_connectionString);
+
+        private CarsAccess carsAccess = new CarsAccess(_connectionString);
 
         public MyGarageDBHelper() { }
 
@@ -19,447 +22,45 @@ namespace DBHelper
 
         public void AddCar(Car newCar)
         {
-            AddCarToDB(newCar);
+            carsAccess.AddCar(newCar);
         }
 
         public void AddUser(User newUser)
         {
-            AddUserToDB(newUser);
+            usersAccess.AddUserToDB(newUser);
         }
 
         public List<CarReference> GetAllCarReferences()
         {
-            List<CarReference> carsList = new List<CarReference>(GetAwaliableCarsList());
+            List<CarReference> carsList = new List<CarReference>(carReferencesAccess.GetAllCarRefs());
             return carsList;
         }
 
         public List<Car> GetCarsByOwnerId(int ownerId)
         {
-            List<Car> userGarage = new List<Car>(GetUserCars(ownerId));
+            List<Car> userGarage = new List<Car>(carsAccess.GetCarsByUser(ownerId));
             return userGarage;
-        }
-
-        public CarReference GetReferenceById(int wantedId)
-        {
-            return GetRefById(wantedId);
         }
 
         public User GetUser(string username)
         {
-            return (GetByUsername(username));
+            return (usersAccess.GetByUsername(username));
         }
 
         public void RefreshCarData(Car car)
         {
-            RefreshCar(car);
+            carsAccess.RefreshCar(car);
         }
 
         public List<string> GetAllNicknames()
         {
-            List<string> usernames = new List<string>(GetAllUsernames());
+            List<string> usernames = new List<string>(usersAccess.GetAllUsernames());
             return usernames;
         }
 
         public void DeleteCarById(int id)
         {
-            DeleteCar(id);
-        }
-
-        private void AddUserToDB(User newUser)
-        {
-            using (connection = new SqlConnection(_connectionString))
-            {
-                var storedProcedure = "dbo.Users_Add";
-
-                var command = new SqlCommand(storedProcedure, connection)
-                {
-                    CommandType = CommandType.StoredProcedure
-                };
-
-                var userName = new SqlParameter("@username", SqlDbType.NVarChar)
-                {
-                    Value = newUser.userName
-                };
-
-                command.Parameters.Add(userName);
-
-                var password = new SqlParameter("@password", SqlDbType.Int)
-                {
-                    Value = newUser.password
-                };
-
-                command.Parameters.Add(password);
-
-                connection.Open();
-
-                var reader = command.ExecuteReader();
-            }
-        }
-
-        private void AddCarToDB(Car newCar)
-        {
-            using (connection = new SqlConnection(_connectionString))
-            {
-                var storedProcedure = "dbo.Cars_Add";
-
-                var command = new SqlCommand(storedProcedure, connection)
-                {
-                    CommandType = CommandType.StoredProcedure
-                };
-
-                var ownerId = new SqlParameter("@ownerId", SqlDbType.Int)
-                {
-                    Value = newCar.ownerId
-                };
-
-                command.Parameters.Add(ownerId);
-
-                var referenceId = new SqlParameter("@refId", SqlDbType.Int)
-                {
-                    Value = newCar.referenceId
-                };
-
-                command.Parameters.Add(referenceId);
-
-                var nextOilRefresh = new SqlParameter("@nextOilRefresh", SqlDbType.Int)
-                {
-                    Value = newCar.nextOilRefresh
-                };
-
-                command.Parameters.Add(nextOilRefresh);
-
-                var remainingEngineRes = new SqlParameter("@remainingEngineRes", SqlDbType.Int)
-                {
-                    Value = newCar.remainingEngineRes
-                };
-
-                command.Parameters.Add(remainingEngineRes);
-
-                var remainingTimingDriveRes = new SqlParameter("@remainingTimingDriveRes", SqlDbType.Int)
-                {
-                    Value = newCar.remainingTimingDriveRes
-                };
-
-                command.Parameters.Add(remainingTimingDriveRes);
-
-                var remainingSuspensionRes = new SqlParameter("@remainingSuspensionRes", SqlDbType.Int)
-                {
-                    Value = newCar.remainingSuspensionRes
-                };
-
-                command.Parameters.Add(remainingSuspensionRes);
-
-                var remainingGearboxRes = new SqlParameter("@remainingGearboxRes", SqlDbType.Int)
-                {
-                    Value = newCar.remainingGearboxRes
-                };
-
-                command.Parameters.Add(remainingGearboxRes);
-
-                var remainingSteeringRes = new SqlParameter("@remainingSteeringRes", SqlDbType.Int)
-                {
-                    Value = newCar.remainingSteeringRes
-                };
-
-                command.Parameters.Add(remainingSteeringRes);
-
-                var remainingBrakesRes = new SqlParameter("@remainingBrakesRes", SqlDbType.Int)
-                {
-                    Value = newCar.remainingBrakesRes
-                };
-
-                command.Parameters.Add(remainingBrakesRes);
-
-                var totalMileage = new SqlParameter("@totalMileage", SqlDbType.Int)
-                {
-                    Value = newCar.totalMileage
-                };
-
-                command.Parameters.Add(totalMileage);
-
-                connection.Open();
-
-                var reader = command.ExecuteReader();
-            }
-
-        }
-
-        private void RefreshCar(Car car)
-        {
-            using (connection = new SqlConnection(_connectionString))
-            {
-                var storedProcedure = "dbo.Cars_Refresh";
-
-                var command = new SqlCommand(storedProcedure, connection)
-                {
-                    CommandType = CommandType.StoredProcedure
-                };
-
-                var id = new SqlParameter("@id", SqlDbType.Int)
-                {
-                    Value = car.id
-                };
-
-                command.Parameters.Add(id);
-
-                var nextOilRefresh = new SqlParameter("@nextOilRefresh", SqlDbType.Int)
-                {
-                    Value = car.nextOilRefresh
-                };
-
-                command.Parameters.Add(nextOilRefresh);
-
-                var remainingEngineRes = new SqlParameter("@remainingEngineRes", SqlDbType.Int)
-                {
-                    Value = car.remainingEngineRes
-                };
-
-                command.Parameters.Add(remainingEngineRes);
-
-                var remainingTimingDriveRes = new SqlParameter("@remainingTimingDriveRes", SqlDbType.Int)
-                {
-                    Value = car.remainingTimingDriveRes
-                };
-
-                command.Parameters.Add(remainingTimingDriveRes);
-
-                var remainingSuspensionRes = new SqlParameter("@remainingSuspensionRes", SqlDbType.Int)
-                {
-                    Value = car.remainingSuspensionRes
-                };
-
-                command.Parameters.Add(remainingSuspensionRes);
-
-                var remainingGearboxRes = new SqlParameter("@remainingGearboxRes", SqlDbType.Int)
-                {
-                    Value = car.remainingGearboxRes
-                };
-
-                command.Parameters.Add(remainingGearboxRes);
-
-                var remainingSteeringRes = new SqlParameter("@remainingSteeringRes", SqlDbType.Int)
-                {
-                    Value = car.remainingSteeringRes
-                };
-
-                command.Parameters.Add(remainingSteeringRes);
-
-                var remainingBrakesRes = new SqlParameter("@remainingBrakesRes", SqlDbType.Int)
-                {
-                    Value = car.remainingBrakesRes
-                };
-
-                command.Parameters.Add(remainingBrakesRes);
-
-                var totalMileage = new SqlParameter("@totalMileage", SqlDbType.Int)
-                {
-                    Value = car.totalMileage
-                };
-
-                command.Parameters.Add(totalMileage);
-
-                connection.Open();
-
-                var reader = command.ExecuteReader();
-            }
-        }
-
-        private CarReference GetRefById(int wantedId)
-        {
-            using (connection = new SqlConnection(_connectionString))
-            {
-                var storedProcedure = "dbo.CarReferences_GetById";
-
-                var command = new SqlCommand(storedProcedure, connection)
-                {
-                    CommandType = CommandType.StoredProcedure
-                };
-
-                var id = new SqlParameter("@id", SqlDbType.Int)
-                {
-                    Value = wantedId
-                };
-
-                command.Parameters.Add(id);
-
-                connection.Open();
-
-                var reader = command.ExecuteReader();
-
-                var manufacturerId = (int)reader["manufacturer"];
-
-                var vendor = manufacturersAccessor.GetManufacturerById(manufacturerId);
-
-                var model = reader["model"] as string;
-                var oilRefreshRate = (int)reader["oilRefreshRate"];
-                var engineResource = (int)reader["engineResource"];
-                var timingDriveResource = (int)reader["timingDriveResource"];
-                var suspensionResource = (int)reader["suspensionResource"];
-                var gearboxResource = (int)reader["gearboxResource"];
-                var steeringResource = (int)reader["steeringResource"];
-                var brakesResource = (int)reader["brakesResource"];
-
-                return new CarReference(wantedId, vendor, model, oilRefreshRate, engineResource, timingDriveResource,
-                    suspensionResource, gearboxResource, steeringResource, brakesResource);
-            }
-        }
-
-        private IEnumerable<Car> GetUserCars(int ownerId)
-        {
-            using (connection = new SqlConnection(_connectionString))
-            {
-                var storedProcedure = "dbo.Cars_GetByUserId";
-
-                var command = new SqlCommand(storedProcedure, connection)
-                {
-                    CommandType = CommandType.StoredProcedure
-                };
-
-                var wantedId = new SqlParameter("@userId", SqlDbType.Int)
-                {
-                    Value = ownerId
-                };
-
-                command.Parameters.Add(wantedId);
-
-                connection.Open();
-
-                var reader = command.ExecuteReader();
-
-
-
-                while (reader.Read())
-                {
-                    var id = (int)reader["id"];
-                    var referenceId = (int)reader["referenceId"];
-                    var nextOilRefresh = (int)reader["nextOilRefresh"];
-                    var remainingEngineRes = (int)reader["remainingEngineRes"];
-                    var remainingTimingDriveRes = (int)reader["remainingTimingDriveRes"];
-                    var remainingSuspensionRes = (int)reader["remainingSuspensionRes"];
-                    var remainingGearboxRes = (int)reader["remainingGearboxRes"];
-                    var remainingSteeringRes = (int)reader["remainingSteeringRes"];
-                    var remainingBrakesRes = (int)reader["remainingBrakesRes"];
-                    var totalMileage = (int)reader["totalMileage"];
-
-                    yield return new Car(id, ownerId, referenceId, totalMileage, nextOilRefresh, remainingEngineRes, remainingTimingDriveRes, remainingSuspensionRes, remainingGearboxRes,
-                        remainingSteeringRes, remainingBrakesRes);
-                }
-            }
-        }
-
-        private IEnumerable<CarReference> GetAwaliableCarsList()
-        {
-            using (connection = new SqlConnection(_connectionString))
-            {
-                var storedProcedure = "dbo.CarReferences_GetAll";
-
-                var command = new SqlCommand(storedProcedure, connection)
-                {
-                    CommandType = CommandType.StoredProcedure
-                };
-
-                connection.Open();
-
-                var reader = command.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    var id = (int)reader["id"];
-                    var manufacturer = reader["manufacturer"] as string;
-                    var model = reader["model"] as string;
-                    var oilRefreshRate = (int)reader["oilRefreshRate"];
-                    var engineResource = (int)reader["engineResource"];
-                    var timingDriveResource = (int)reader["timingDriveResource"];
-                    var suspensionResource = (int)reader["suspensionResource"];
-                    var gearboxResource = (int)reader["gearboxResource"];
-                    var steeringResource = (int)reader["steeringResource"];
-                    var brakesResource = (int)reader["brakesResource"];
-
-                    yield return new CarReference(id, manufacturer, model, oilRefreshRate, engineResource, timingDriveResource, suspensionResource,
-                        gearboxResource, steeringResource, brakesResource);
-                }
-            }
-        }
-
-        private User GetByUsername(string wantedUsername)
-        {
-            using (connection = new SqlConnection(_connectionString))
-            {
-                var storedProcedure = "dbo.Users_GetByUserName";
-
-                var command = new SqlCommand(storedProcedure, connection)
-                {
-                    CommandType = CommandType.StoredProcedure
-                };
-
-                var userName = new SqlParameter("@userName", SqlDbType.NVarChar)
-                {
-                    Value = wantedUsername
-                };
-
-                command.Parameters.Add(userName);
-
-                connection.Open();
-
-                var reader = command.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    var id = (int)reader["id"];
-                    var username = reader["username"] as string;
-                    var password = (int)reader["password"];
-                    return new User(id, username, password);
-                }
-                return null;
-            }
-        }
-
-        private IEnumerable<string> GetAllUsernames()
-        {
-            using (connection = new SqlConnection(_connectionString))
-            {
-                var storedProcedure = "dbo.Users_GetAllNicknames";
-
-                var command = new SqlCommand(storedProcedure, connection)
-                {
-                    CommandType = CommandType.StoredProcedure
-                };
-
-                connection.Open();
-
-                var reader = command.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    var nickname = reader["username"] as string;
-
-                    yield return nickname;
-                }
-            }
-        }
-
-        private void DeleteCar(int carId)
-        {
-            using (connection = new SqlConnection(_connectionString))
-            {
-                var storedProcedure = "dbo.Cars_DeleteById";
-
-                var command = new SqlCommand(storedProcedure, connection)
-                {
-                    CommandType = CommandType.StoredProcedure
-                };
-
-                var id = new SqlParameter("@id", SqlDbType.Int)
-                {
-                    Value = carId
-                };
-
-                command.Parameters.Add(id);
-
-                connection.Open();
-
-                command.ExecuteReader();
-            }
+            carsAccess.DeleteCar(id);
         }
     }
 }
